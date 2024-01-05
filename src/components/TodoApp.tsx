@@ -3,8 +3,11 @@ import { Container, Nav, Tab } from 'react-bootstrap';
 import TodoItem from './TodoItem';
 import InputTodo from './InputTodo';
 
-// JSONサーバー
-const API_URL = 'http://localhost:3000/todo/';
+// SupabaseFunctionsの呼び出し
+import { fetchTodoList } from '../../utils/supabaseFunctions';
+
+// JSONサーバーの記述を削除
+// const API_URL = 'http://localhost:3000/todo/';
 
 interface Todo {
   id: number;
@@ -13,20 +16,26 @@ interface Todo {
 }
 
 const TodoApp = () => {
-  const [todoList, setTodoList] = useState([]); //todoのuseState
+  const [todoList, setTodoList] = useState<Todo[]>([]);
 
   useEffect(() => {
     fetchTodo();
   }, []);
 
-  const fetchTodo = () => {
-    fetch(API_URL)
-      .then((responseData) => {
-        return responseData.json();
-      })
-      .then((result) => {
-        setTodoList(result);
-      });
+  // const fetchTodo = () => {
+  //   fetch(API_URL)
+  //     .then((responseData) => {
+  //       return responseData.json();
+  //     })
+  //     .then((result) => {
+  //       setTodoList(result);
+  //     });
+  // };
+
+  // SupabaseによるfetchTodo関数を定義
+  const fetchTodo = async () => {
+    const todoList = (await fetchTodoList()) as Todo[];
+    setTodoList(todoList);
   };
 
   const addTodo = (inputTitle: string) => {
