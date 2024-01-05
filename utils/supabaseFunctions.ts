@@ -5,10 +5,10 @@ export const fetchTodoList = async () => {
   return todoItems.data;
 };
 
-export const addTodo = async (title: string) => {
+export const addTodoItem = async (title: string) => {
   await supabase.from('todo_items').insert({ title: title });
 };
 
-export const deleteTodo = async (id: number) => {
+export const deleteTodoItem = async (id: number) => {
   await supabase.from('todo_items').delete().eq('id', id);
 };

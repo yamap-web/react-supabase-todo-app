@@ -4,7 +4,7 @@ import TodoItem from './TodoItem';
 import InputTodo from './InputTodo';
 
 // SupabaseFunctionsの呼び出し
-import { fetchTodoList } from '../../utils/supabaseFunctions';
+import { fetchTodoList, addTodoItem, deleteTodoItem } from '../../utils/supabaseFunctions';
 
 // JSONサーバーの記述を削除
 // const API_URL = 'http://localhost:3000/todo/';
@@ -38,45 +38,61 @@ const TodoApp = () => {
     setTodoList(todoList);
   };
 
-  const addTodo = (inputTitle: string) => {
-    const addData = {
-      title: inputTitle,
-      status: false,
-    };
+  // const addTodo = (inputTitle: string) => {
+  //   const addData = {
+  //     title: inputTitle,
+  //     status: false,
+  //   };
 
-    fetch(API_URL, {
-      body: JSON.stringify(addData),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(fetchTodo);
+  //   fetch(API_URL, {
+  //     body: JSON.stringify(addData),
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }).then(fetchTodo);
+  // };
+
+  // SupabaseによるaddTodo関数を定義
+  const addTodo = async (inputTitle: string) => {
+    if (!inputTitle) return;
+
+    await addTodoItem(inputTitle);
+    const todoItems = (await fetchTodoList()) as Todo[];
+    setTodoList(todoItems);
   };
 
-  const deleteTodo = (id: number) => {
-    const targetUrl = API_URL + id;
+  // const deleteTodo = (id: number) => {
+  //   const targetUrl = API_URL + id;
 
-    fetch(targetUrl, {
-      method: 'DELETE',
-    }).then(fetchTodo);
+  //   fetch(targetUrl, {
+  //     method: 'DELETE',
+  //   }).then(fetchTodo);
+  // };
+
+  // SupabaseによるdeleteTodo関数を定義
+  const deleteTodo = async (id: number) => {
+    await deleteTodoItem(id);
+    const todoItems = (await fetchTodoList()) as Todo[];
+    setTodoList(todoItems);
   };
 
-  const checkTodo = (id: number, title: string, status: boolean) => {
-    const targetUrl = API_URL + id;
-    const editData = {
-      id: id,
-      title: title,
-      status: !status,
-    };
+  // const checkTodo = (id: number, title: string, status: boolean) => {
+  //   const targetUrl = API_URL + id;
+  //   const editData = {
+  //     id: id,
+  //     title: title,
+  //     status: !status,
+  //   };
 
-    fetch(targetUrl, {
-      body: JSON.stringify(editData),
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then(fetchTodo);
-  };
+  //   fetch(targetUrl, {
+  //     body: JSON.stringify(editData),
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }).then(fetchTodo);
+  // };
 
   return (
     <Container className='mt-3 mb-3 col-md-6'>
@@ -106,7 +122,7 @@ const TodoApp = () => {
                       title={todoItem.title}
                       status={todoItem.status}
                       deleteTodo={deleteTodo}
-                      checkTodo={checkTodo}
+                      // checkTodo={checkTodo}
                     />
                   );
                 } else {
@@ -126,7 +142,7 @@ const TodoApp = () => {
                       title={todoItem.title}
                       status={todoItem.status}
                       deleteTodo={deleteTodo}
-                      checkTodo={checkTodo}
+                      // checkTodo={checkTodo}
                     />
                   );
                 } else {
