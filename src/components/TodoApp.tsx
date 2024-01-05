@@ -7,9 +7,9 @@ import InputTodo from './InputTodo';
 const API_URL = 'http://localhost:3000/todo/';
 
 interface Todo {
-  id: number,
-  title: string,
-  status: boolean
+  id: number;
+  title: string;
+  status: boolean;
 }
 
 const TodoApp = () => {
@@ -17,76 +17,79 @@ const TodoApp = () => {
 
   useEffect(() => {
     fetchTodo();
-  }, [])
+  }, []);
 
   const fetchTodo = () => {
-    fetch(API_URL).then(
-      (responseData) => {
+    fetch(API_URL)
+      .then((responseData) => {
         return responseData.json();
-    }).then(
-      (result) => {
+      })
+      .then((result) => {
         setTodoList(result);
-    });
-  }
+      });
+  };
 
   const addTodo = (inputTitle: string) => {
     const addData = {
       title: inputTitle,
-      status: false
+      status: false,
     };
 
     fetch(API_URL, {
       body: JSON.stringify(addData),
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     }).then(fetchTodo);
-  }
+  };
 
   const deleteTodo = (id: number) => {
     const targetUrl = API_URL + id;
 
     fetch(targetUrl, {
-      method: 'DELETE'
+      method: 'DELETE',
     }).then(fetchTodo);
-  }
+  };
 
   const checkTodo = (id: number, title: string, status: boolean) => {
     const targetUrl = API_URL + id;
     const editData = {
       id: id,
       title: title,
-      status: !status
+      status: !status,
     };
 
     fetch(targetUrl, {
-        body: JSON.stringify(editData),
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      body: JSON.stringify(editData),
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }).then(fetchTodo);
-  }
-
+  };
 
   return (
-    <Container className="mt-3 mb-3">
-      <Tab.Container defaultActiveKey="first">
-        <Nav justify variant="tabs">
+    <Container className='mt-3 mb-3 col-md-6'>
+      <Tab.Container defaultActiveKey='first'>
+        <Nav justify variant='tabs'>
           <Nav.Item>
-            <Nav.Link eventKey="first">やること</Nav.Link>
+            <Nav.Link eventKey='first' className='fs-4 fw-bold'>
+              <i className='bi bi-card-list'></i>&nbsp;&nbsp;to Do
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="second">完了</Nav.Link>
+            <Nav.Link eventKey='second' className='fs-4 fw-bold'>
+              <i className='bi bi-check2-square'></i>&nbsp;&nbsp;Done
+            </Nav.Link>
           </Nav.Item>
         </Nav>
         <Tab.Content>
-          <Tab.Pane eventKey="first">
+          <Tab.Pane eventKey='first'>
             <InputTodo addTodo={addTodo} />
-            <div className="todo-list mt-3">
+            <div className='todo-list mt-3'>
               {todoList.map((todoItem: Todo) => {
-                if(!todoItem.status) {
+                if (!todoItem.status) {
                   return (
                     <TodoItem
                       key={todoItem.id}
@@ -103,10 +106,10 @@ const TodoApp = () => {
               })}
             </div>
           </Tab.Pane>
-          <Tab.Pane eventKey="second">
-            <div className="complete-list mt-3">
+          <Tab.Pane eventKey='second'>
+            <div className='complete-list mt-3'>
               {todoList.map((todoItem: Todo) => {
-                if(todoItem.status) {
+                if (todoItem.status) {
                   return (
                     <TodoItem
                       key={todoItem.id}
@@ -127,6 +130,6 @@ const TodoApp = () => {
       </Tab.Container>
     </Container>
   );
-}
+};
 
 export default TodoApp;
