@@ -4,7 +4,12 @@ import TodoItem from './TodoItem';
 import InputTodo from './InputTodo';
 
 // SupabaseFunctionsの呼び出し
-import { fetchTodoList, addTodoItem, deleteTodoItem } from '../../utils/supabaseFunctions';
+import {
+  fetchTodoList,
+  addTodoItem,
+  deleteTodoItem,
+  checkTodoItem,
+} from '../../utils/supabaseFunctions';
 
 // JSONサーバーの記述を削除
 // const API_URL = 'http://localhost:3000/todo/';
@@ -94,6 +99,13 @@ const TodoApp = () => {
   //   }).then(fetchTodo);
   // };
 
+  // SupabaseによるcheckTodo関数を定義
+  const checkTodo = async (id: number, status: boolean) => {
+    await checkTodoItem(id, status);
+    const todoItems = (await fetchTodoList()) as Todo[];
+    setTodoList(todoItems);
+  };
+
   return (
     <Container className='mt-3 mb-3 col-md-6'>
       <Tab.Container defaultActiveKey='first'>
@@ -122,7 +134,7 @@ const TodoApp = () => {
                       title={todoItem.title}
                       status={todoItem.status}
                       deleteTodo={deleteTodo}
-                      // checkTodo={checkTodo}
+                      checkTodo={checkTodo}
                     />
                   );
                 } else {
@@ -142,7 +154,7 @@ const TodoApp = () => {
                       title={todoItem.title}
                       status={todoItem.status}
                       deleteTodo={deleteTodo}
-                      // checkTodo={checkTodo}
+                      checkTodo={checkTodo}
                     />
                   );
                 } else {

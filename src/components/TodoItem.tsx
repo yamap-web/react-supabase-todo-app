@@ -6,7 +6,7 @@ interface TodoItemProps {
   title: string,
   status: boolean,
   deleteTodo: (id: number) => void,
-  // checkTodo: (id: number, title: string, status: boolean) => void
+  checkTodo: (id: number, status: boolean) => void
 }
 
 const TodoItem = (props: TodoItemProps) => {
@@ -15,7 +15,7 @@ const TodoItem = (props: TodoItemProps) => {
     title,
     status,
     deleteTodo,
-    // checkTodo,
+    checkTodo,
   } = props;
 
   return (
@@ -24,7 +24,7 @@ const TodoItem = (props: TodoItemProps) => {
         <Form.Check
           className="mt-0"
           checked={status}
-          // onChange={() => checkTodo(id, title, status)}
+          onChange={() => checkTodo(id, status)}
         />
       </InputGroup.Text>
       <span
