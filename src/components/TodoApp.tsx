@@ -3,7 +3,7 @@ import { Container, Nav, Tab } from 'react-bootstrap';
 import TodoItem from './TodoItem';
 import InputTodo from './InputTodo';
 
-// SupabaseFunctionsの呼び出し
+// supabaseFunctionsの呼び出し
 import {
   fetchTodoList,
   addTodoItem,
@@ -48,7 +48,6 @@ const TodoApp = () => {
   //     title: inputTitle,
   //     status: false,
   //   };
-
   //   fetch(API_URL, {
   //     body: JSON.stringify(addData),
   //     method: 'POST',
@@ -69,7 +68,6 @@ const TodoApp = () => {
 
   // const deleteTodo = (id: number) => {
   //   const targetUrl = API_URL + id;
-
   //   fetch(targetUrl, {
   //     method: 'DELETE',
   //   }).then(fetchTodo);
@@ -89,7 +87,6 @@ const TodoApp = () => {
   //     title: title,
   //     status: !status,
   //   };
-
   //   fetch(targetUrl, {
   //     body: JSON.stringify(editData),
   //     method: 'PUT',
