@@ -62,8 +62,7 @@ const TodoApp = () => {
     if (!inputTitle) return;
 
     await addTodoItem(inputTitle);
-    const todoItems = (await fetchTodoList()) as Todo[];
-    setTodoList(todoItems);
+    fetchTodo();
   };
 
   // const deleteTodo = (id: number) => {
@@ -76,8 +75,7 @@ const TodoApp = () => {
   // SupabaseによるdeleteTodo関数を定義
   const deleteTodo = async (id: number) => {
     await deleteTodoItem(id);
-    const todoItems = (await fetchTodoList()) as Todo[];
-    setTodoList(todoItems);
+    fetchTodo();
   };
 
   // const checkTodo = (id: number, title: string, status: boolean) => {
@@ -99,8 +97,7 @@ const TodoApp = () => {
   // SupabaseによるcheckTodo関数を定義
   const checkTodo = async (id: number, status: boolean) => {
     await checkTodoItem(id, status);
-    const todoItems = (await fetchTodoList()) as Todo[];
-    setTodoList(todoItems);
+    fetchTodo();
   };
 
   return (
