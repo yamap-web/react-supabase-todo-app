@@ -3,6 +3,9 @@ React × SupabaseプロジェクトをVercelでデプロイ（webpack + TypeScri
 https://zenn.dev/yamap_web/articles/d6011b6fba28f3
 
 CSS framework: Bootstrap 
+
 languages: TypeScript 
+
 JS library: React 
+
 database/backend: Supabase
