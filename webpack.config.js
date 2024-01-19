@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const workBoxWebpackPlugin = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = {
   mode: 'development',
@@ -46,6 +48,15 @@ module.exports = {
       template: __dirname + '/src/index.html',
     }),
     new Dotenv(),
+    new workBoxWebpackPlugin.GenerateSW({
+      swDest: __dirname + '/dist' + '/service-worker.js',
+    }),
+    new WebpackPwaManifest({
+      short_name: 'short name', // ホーム画面のラベルに表示される名称
+      name: 'app full name', // appの名前
+      display: 'standalone', // standaloneにするとブラウザのUI要素が削除されてアプリっぽくなる
+      start_url: 'index.html', // 開始時に起動するページ
+    }),
   ],
   devServer: {
     static: {
