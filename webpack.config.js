@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 const workBoxWebpackPlugin = require('workbox-webpack-plugin');
 // const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -49,6 +50,10 @@ module.exports = {
       template: __dirname + '/src/index.html',
     }),
     new Dotenv(),
+    new webpack.DefinePlugin({
+      'process.env.REACT_PUBLIC_SUPABASE_URL': JSON.stringify(process.env.REACT_PUBLIC_SUPABASE_URL),
+      'process.env.REACT_PUBLIC_SUPABASE_ANON_KEY': JSON.stringify(process.env.REACT_PUBLIC_SUPABASE_ANON_KEY),
+    }),
     new workBoxWebpackPlugin.GenerateSW({
       swDest: __dirname + '/dist' + '/service-worker.js',
     }),
