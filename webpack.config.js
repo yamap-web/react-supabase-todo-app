@@ -1,8 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const webpack = require('webpack');
-const dotenv = require('dotenv');
-const env = dotenv.config().parsed;
 const workBoxWebpackPlugin = require('workbox-webpack-plugin');
 // const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -52,9 +49,6 @@ module.exports = {
       template: __dirname + '/src/index.html',
     }),
     new Dotenv(),
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(env)
-    }),
     new workBoxWebpackPlugin.GenerateSW({
       swDest: __dirname + '/dist' + '/service-worker.js',
     }),
