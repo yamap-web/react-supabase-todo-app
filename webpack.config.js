@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
 const env = dotenv.config().parsed;
 const workBoxWebpackPlugin = require('workbox-webpack-plugin');
 // const WebpackPwaManifest = require('webpack-pwa-manifest');
