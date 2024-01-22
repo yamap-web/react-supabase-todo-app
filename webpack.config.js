@@ -1,17 +1,19 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
-const workBoxWebpackPlugin = require('workbox-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const workBoxWebpackPlugin = require("workbox-webpack-plugin");
 // const WebpackPwaManifest = require('webpack-pwa-manifest');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+const env = require("dotenv").config().parsed;
 
 module.exports = {
-  mode: 'development',
+  mode: "development",
   entry: {
-    main: __dirname + '/src/main.tsx',
+    main: __dirname + "/src/main.tsx",
   },
   output: {
-    path: __dirname + '/dist',
-    filename: '[name].js',
+    path: __dirname + "/dist",
+    filename: "[name].js",
   },
   module: {
     rules: [
@@ -20,37 +22,48 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
               presets: [
-                '@babel/preset-env',
-                '@babel/preset-react',
-                '@babel/preset-typescript',
+                "@babel/preset-env",
+                "@babel/preset-react",
+                "@babel/preset-typescript",
               ],
             },
           },
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
           },
         ],
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
   resolve: {
-    modules: [__dirname + '/node_modules'],
-    extensions: ['.ts', '.tsx', '.js'],
+    modules: [__dirname + "/node_modules"],
+    extensions: [".ts", ".tsx", ".js"],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + '/src/index.html',
+      template: __dirname + "/src/index.html",
     }),
-    new Dotenv(),
+    env !== undefined
+      ? new webpack.DefinePlugin({
+          "process.env": JSON.stringify(process.env),
+        })
+      : new webpack.DefinePlugin({
+          "process.env.REACT_PUBLIC_SUPABASE_URL": JSON.stringify(
+            process.env.REACT_PUBLIC_SUPABASE_URL
+          ),
+          "process.env.REACT_PUBLIC_SUPABASE_ANON_KEY": JSON.stringify(
+            process.env.REACT_PUBLIC_SUPABASE_ANON_KEY
+          ),
+        }),
     new workBoxWebpackPlugin.GenerateSW({
-      swDest: __dirname + '/dist' + '/service-worker.js',
+      swDest: __dirname + "/dist" + "/service-worker.js",
     }),
     // new WebpackPwaManifest({
     //   short_name: 'short name', // ホーム画面のラベルに表示される名称
@@ -61,8 +74,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'public',
-          to: '.',
+          from: "public",
+          to: ".",
         },
       ],
     }),
@@ -70,7 +83,7 @@ module.exports = {
   ],
   devServer: {
     static: {
-      directory: __dirname + '/dist',
+      directory: __dirname + "/dist",
     },
     port: 8080,
   },
