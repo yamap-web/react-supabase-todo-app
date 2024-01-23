@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-const workBoxWebpackPlugin = require("workbox-webpack-plugin");
+const { GenerateSW } = require("workbox-webpack-plugin");
 // const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const env = require("dotenv").config().parsed;
@@ -61,8 +61,10 @@ module.exports = {
             process.env.REACT_PUBLIC_SUPABASE_ANON_KEY
           ),
         }),
-    new workBoxWebpackPlugin.GenerateSW({
+    new GenerateSW({
       swDest: __dirname + "/dist" + "/service-worker.js",
+      skipWaiting: true,
+      clientsClaim: true,
     }),
     // new WebpackPwaManifest({
     //   short_name: 'short name', // ホーム画面のラベルに表示される名称
