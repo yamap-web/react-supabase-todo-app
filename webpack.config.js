@@ -48,6 +48,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: __dirname + "/src/index.html",
+      inject: false,
     }),
     env !== undefined
       ? new webpack.DefinePlugin({
@@ -65,6 +66,7 @@ module.exports = {
       swDest: __dirname + "/dist" + "/service-worker.js",
       skipWaiting: true,
       clientsClaim: true,
+      
     }),
     // new WebpackPwaManifest({
     //   short_name: 'short name', // ホーム画面のラベルに表示される名称
