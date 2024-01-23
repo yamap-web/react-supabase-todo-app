@@ -3,7 +3,6 @@ const webpack = require("webpack");
 const workBoxWebpackPlugin = require("workbox-webpack-plugin");
 // const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-
 const env = require("dotenv").config().parsed;
 
 module.exports = {
